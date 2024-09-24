@@ -6,21 +6,37 @@ import sqlite3 as sql
 def makeDatabase(db):
     #Database craeted and oldcopies are dropped
     c = db.cursor()
-    c.execute("DROP TABLE IF EXISTS tblQuestions")
+    c.execute("DROP TABLE IF EXISTS tblquestions")
     c.execute("DROP TABLE IF EXISTS tbluserdetails")
     c.execute("DROP TABLE IF EXISTS tbluserstats")
     
   
-# Question database initialisation
-    c.execute("CREATE TABLE tblQuestions (Questionimg TEXT, maxscore INTEGER,TopicName TEXT, Answer TEXT, QuestionID INTEGER PRIMARY KEY AUTOINCREMENT, Hints TEXT, ModelAnswer TEXT)")
-    c.execute("INSERT INTO tblQuestions(Questionimg ,maxscore,TopicName, Answer, Hints, ModelAnswer) Values (?,?,?,?,?,?)", ( "Test", 5 ,"ASTRO","lightyear", "NOHINT", "TESTVALUE"))
+# Question database initialisation and adding more data
+    c.execute("CREATE TABLE tblquestions (questionimg TEXT, maxscore INTEGER,topicname TEXT, answer TEXT, questionid INTEGER PRIMARY KEY AUTOINCREMENT, hints TEXT, modelanswer TEXT)")
+    c.execute("INSERT INTO tblquestions(Questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 5 ,"ASTRO","lightyear", "NOHINT", "TESTVALUE"))
+    c.execute("INSERT INTO tblquestions(Questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 12 ,"Forces","Vector", "NOHINT", "TESTVALUE"))
+    c.execute("INSERT INTO tblquestions(Questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 2 ,"Gravity","12N", "NOHINT", "TESTVALUE"))
+    c.execute("INSERT INTO tblquestions(Questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 1 ,"Electricity","12V", "NOHINT", "TESTVALUE")) 
+    c.execute("INSERT INTO tblquestions(Questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 5 ,"Mechanics","200N", "Units", "TESTVALUE"))
+    
+    
+    
     db.commit()
 #userDetails database initialisation
-    c.execute("CREATE TABLE tbluserdetails (FirstName TEXT,Surname TEXT, Password TEXT, UserID INTEGER PRIMARY KEY AUTOINCREMENT)")
-    c.execute("INSERT INTO tbluserdetails(FirstName ,Surname, Password) Values (?,?,?)", ("John","Smith","12345"))
+    c.execute("CREATE TABLE tbluserdetails (firstname TEXT,surname TEXT, password TEXT, userid INTEGER PRIMARY KEY AUTOINCREMENT)")
+    c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("John","Smith","12345"))
+    c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Bob","Patl","P4ssw0rd"))
+    c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("dimon","dith","baejk"))
+    c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Hahs","kyee","hashhash"))
+    c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Louis","oPris","WOMPWOMP"))
+    
 #userstats database initialisation
-    c.execute("CREATE TABLE tbluserstats (Userid INTEGER,QuestionID INTEGER, AttemptID INTEGER PRIMARY KEY AUTOINCREMENT, dateanswered INTEGER, Score INTEGER, maxscore INTEGER )")
-    c.execute("INSERT INTO tbluserstats(dateanswered ,Score, maxscore) Values (?,?,?)", (21012007,5,6))
+    c.execute("CREATE TABLE tbluserstats (userid INTEGER,questionid INTEGER, attemptid INTEGER PRIMARY KEY AUTOINCREMENT, dateanswered TEXT, score INTEGER)")
+    c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/8/6", 5))
+    c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/9/6", 5))
+    c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/10/6", 5))
+    c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/11/6", 5))
+    c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/5/12", 5))
 
 
 class App(Tk):
@@ -80,18 +96,42 @@ class App(Tk):
     def testDB(self):
         # this just accesses the database and print out what it finds in the pupils table
         c = self.db.cursor()
-        results = c.execute("SELECT * FROM tblQuestions")
+        results = c.execute("SELECT * FROM tblquestions")
+        print("Question Table")
         for line in results.fetchall():
             print(line)
+        for i in range (3):
+            print("")
+        print("UserDetails Table")
         c = self.db.cursor()
         results = c.execute("SELECT * FROM tbluserdetails")
         for line in results.fetchall():
             print(line)
+        for i in range (3):
+            print("")
+        print("UserStats Table")
         c = self.db.cursor()
         results = c.execute("SELECT * FROM tbluserstats")
        
         for line in results.fetchall():
             print(line )
+        for i in range (3):
+            print("")
+        
+        
+      #  c=self.db.cursor()
+      #  results=c.execute()
+
+
+
+
+
+
+        
+
+
+
+
 
 
     def page1Switch(self):
