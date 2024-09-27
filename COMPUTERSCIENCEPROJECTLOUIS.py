@@ -1,6 +1,32 @@
-from tkinter import *
-import tkinter.font as tkFont
+import tkinter as tk
+from tkinter import messagebox
 import sqlite3 as sql
+from LoginScreen import LoginFrame
+
+class Main(tk.Tk):
+
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+        self.geometry("1000x600")
+        self.title("Main Menu")
+        self.loggedInUser = ""
+        self.db = sql.connect("demoFile.sqlite")
+
+        self.frames = [ LoginFrame(self)]
+
+        self.switchFrame(0)
+
+    def successfulLogin(self,username):
+        self.loggedInUser = username
+        print("Logged in as", username)
+        self.switchFrame(1)
+
+
+
+
+
+
+
 
     
 def makeDatabase(db):
@@ -39,7 +65,7 @@ def makeDatabase(db):
     c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/5/12", 5))
 
 
-class App(Tk):
+class App(tk):
     def __init__(self):
         Tk.__init__(self)
         self.titlefont = tkFont.Font(family="Arial", size=20, slant="italic")
