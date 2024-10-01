@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import font as tkFont
 from tkinter import messagebox
 import sqlite3 as sql
 from LoginScreen import LoginFrame
@@ -49,7 +50,9 @@ def makeDatabase(db):
     
     db.commit()
 #userDetails database initialisation
-    c.execute("CREATE TABLE tbluserdetails (firstname TEXT,surname TEXT, password TEXT, userid INTEGER PRIMARY KEY AUTOINCREMENT)")
+    c.execute("CREATE TABLE tbluserdetails (firstname TEXT,surname TEXT, p
+        self.switchFrame(0)
+assword TEXT, userid INTEGER PRIMARY KEY AUTOINCREMENT)")
     c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("John","Smith","12345"))
     c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Bob","Patl","P4ssw0rd"))
     c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("dimon","dith","baejk"))
@@ -65,9 +68,9 @@ def makeDatabase(db):
     c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/5/12", 5))
 
 
-class App(tk):
+class App(tk.Tk):
     def __init__(self):
-        Tk.__init__(self)
+        tk.Tk.__init__(self)
         self.titlefont = tkFont.Font(family="Arial", size=20, slant="italic")
         self.buttonfont = tkFont.Font(family="Arial", size=18)
 
@@ -75,10 +78,10 @@ class App(tk):
 
 
         # we can make "pages" appear and disappear by putting them into separate frames
-        self.introFrame = Frame(self,width=800)
-        self.title = Label(self.introFrame, anchor="w", justify="left", text="Welcome to my demo\nI hope you enjoy it.", bg="#FF00AA")
+        self.introFrame = tk.Frame(self,width=800)
+        self.title = tk.Label(self.introFrame, anchor="w", justify="left", text="Welcome to my demo\nI hope you enjoy it.", bg="#FF00AA")
         self.title.grid(row=0, column=0, sticky="NSEW")
-        demotextbox = Text(self.introFrame, width=70, height=10, borderwidth=0)
+        demotextbox = tk.Text(self.introFrame, width=70, height=10, borderwidth=0)
         demotextbox.grid(row=1,column=0, sticky="NSEW")
         someText = "this is some text\nIt is very nice and it fits so well in this box"
         demotextbox.insert("end",someText)
@@ -89,16 +92,16 @@ class App(tk):
         self.introFrame.grid(row=0, column=0,rowspan=3, sticky="NSEW") 
 
         # a separate frame for the second page
-        self.secondFrame = Frame(self,width=500)
-        self.page2title = Label(self.secondFrame, anchor="w", justify="left", text="This is the second page", bg="#0088AA")
+        self.secondFrame = tk.Frame(self,width=500)
+        self.page2title = tk.Label(self.secondFrame, anchor="w", justify="left", text="This is the second page", bg="#0088AA")
         self.page2title.grid(row=0, column=0, sticky="NSEW")
         self.secondFrame.columnconfigure(0,weight=1)
         # we don't put this frame in the grid yet
         # so it doesn't appear until the button is pressed
 
-        menubutton1 = Button(self,text="Go to page 1", command = self.page1Switch)
+        menubutton1 = tk.Button(self,text="Go to page 1", command = self.page1Switch)
         menubutton1.grid(row=0, column=1, sticky="NEW")
-        menubutton2 = Button(self,text="Go to page 2", command = self.page2Switch)
+        menubutton2 = tk.Button(self,text="Go to page 2", command = self.page2Switch)
         menubutton2.grid(row=1, column=1, sticky="NEW")
 
         # these lines make sure that the left frame is the right size
@@ -148,18 +151,6 @@ class App(tk):
       #  c=self.db.cursor()
       #  results=c.execute()
 
-
-
-
-
-
-        
-
-
-
-
-
-
     def page1Switch(self):
         # removes other frames from the grid, but adds page 1
         self.secondFrame.grid_forget()
@@ -172,3 +163,4 @@ class App(tk):
 
 if __name__ == "__main__":
     app = App()
+
