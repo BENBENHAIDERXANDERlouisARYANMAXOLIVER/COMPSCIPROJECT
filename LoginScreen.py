@@ -7,43 +7,46 @@ class LoginFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         self.parent.bind("<Return>", self.keypressed)
-        TitleLabel = tk.Label(self, text="Welcome to the Activities Database")
-        TitleLabel.grid(row=0, column=0, columnspan=3, sticky="NSWE")
+        TitleLabel = tk.Label(self, text="Welcome to PhysicsTester")
+        TitleLabel.grid(row=0, column=2, columnspan=2, sticky="NSWE")
         TitleLabel.config(font=("Arial", 24))
 
-        spacer1 = tk.Label(self, text=" ")
-        spacer1.grid(row=1, column=0)
-        l1 = tk.Label(self,text="Username", font=("Arial", 12))
-        l1.grid(row=2, column=0)
-        self.unamebox = tk.Entry(self,width=20, font=("Arial", 12))
-        self.unamebox.grid(row=2,column=1)
+        self.errorLabel = tk.Label(self, text="", font=("Arial", 24))
+        self.errorLabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
+        
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(6, weight=1)   
 
-        spacer2 = tk.Label(self, text=" ")
-        spacer2.grid(row=3, column=0)
-        l2 = tk.Label(self,text="Password", font=("Arial", 12))
-        l2.grid(row=4, column=0)
-        self.passbox = tk.Entry(self,width=20, show="*", font=("Arial", 12))
-        self.passbox.grid(row=4,column=1 )
+        self.rowconfigure(2,minsize=200)
+        self.rowconfigure(4,minsize=50)
+        self.rowconfigure(6,minsize=50)
+        
+        usernamebox = tk.Entry(self,text="Enter Username")
+        usernamebox.grid(row=3,column=2,columnspan=2,sticky="NSEW")
+        
 
+        
+        passwordbox = tk.Entry(self,text="Enter Password")
+        passwordbox.grid(row=5,column=2,columnspan=2,sticky="NSEW")
+        
 
-        spacer3 = tk.Label(self, text=" ")
-        spacer3.grid(row=5, column=0)
-        b2 = tk.Button(self, text="Submit", command=self.loginSubmitted)
-        b2.grid(row=6, column=0)
-        spacer4 = tk.Label(self, text=" ")
-        spacer4.grid(row=7, column=0)
-
-        self.feedbacklabel = tk.Label(self, "", foreground="red")
-        self.feedbacklabel.grid(row=8, column=0)
-        self.columnconfigure(2, weight=1)
-
-        b3 = tk.Button(self, text="Cheat", command=self.cheat)
-        b3.grid(row=9, column=0)
-        self.rowconfigure(8,minsize=300)
+        unamelabel = tk.Label(self, text="Username")
+        unamelabel.grid(row=3, column=1, columnspan=1, sticky="NSWE")
+        unamelabel.config(font=("Arial", 24))
+    
+        pwordlabel = tk.Label(self, text="Password")
+        pwordlabel.grid(row=5, column=1, columnspan=1, sticky="NSWE")
+        pwordlabel.config(font=("Arial", 24))
+        
+        loginbutton=tk.Button(self, text="Login")
+        loginbutton.grid(row=7,column=2,columnspan=1,sticky="NSWE")
+        
+        signupbutton=tk.Button(self, text="Signup")
+        signupbutton.grid(row=7,column=3,columnspan=1,sticky="NSWE")
 
     def keypressed(self,event):
         # they pressed return. have they entered a username yet?
-        if len(self.unamebox.get())>0:
+        if len(self.usernamebox.get())>0:
             self.loginSubmitted()
 
     def loadUp(self):
@@ -53,17 +56,14 @@ class LoginFrame(tk.Frame):
 
     def loginSubmitted(self):
         c = self.parent.db.cursor()
-        r = c.execute("SELECT * from tblPeople WHERE username = ? and password = ?", [self.unamebox.get(), self.passbox.get()])
+        r = c.execute("SELECT * from tblusername WHERE username = {} and password = {}", [self.usernamebox.get(), self.passwordbox.get()])
         results = r.fetchall()
         if len(results)>0:
         #if True:
             self.feedbacklabel.config(text="")
-            self.parent.successfulLogin(self.unamebox.get())
+            self.parent.successfulLogin(self.usernamebox.get())
             return True
         else:
             self.feedbacklabel.config(text="Incorrect Login")
             return False
         
-    def cheat(self):
-        self.parent.successfulLogin("scoogan")
-        return True
