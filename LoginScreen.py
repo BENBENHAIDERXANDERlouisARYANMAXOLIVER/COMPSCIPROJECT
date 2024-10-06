@@ -7,7 +7,13 @@ class LoginFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         self.parent.bind("<Return>", self.keypressed)
-        TitleLabel = tk.Label(self, text="Welcome to PhysicsTester")
+
+
+        
+        TitleLabel = tk.Canvas(self, width=400, height=400)
+        Physicslogo= tk.PhotoImage(file="physicstesterlogo.png")
+        TitleLabel.create_image(50,50, anchor="NE" ,image=Physicslogo)
+
         TitleLabel.grid(row=0, column=2, columnspan=2, sticky="NSWE")
         TitleLabel.config(font=("Arial", 24))
 
