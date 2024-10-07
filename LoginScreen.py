@@ -5,27 +5,29 @@ class LoginFrame(tk.Frame):
         self.parent = parent
         self.db = parent.db
         tk.Frame.__init__(self, parent)
-
+        self.configure(background="white")
         self.parent.bind("<Return>", self.keypressed)
 
 
         
-        TitleLabel = tk.Canvas(self, width=400, height=400)
-        Physicslogo= tk.PhotoImage(file="physicstesterlogo.png")
-        TitleLabel.create_image(50,50, anchor="NE" ,image=Physicslogo)
+        self.TitleLabel = tk.Canvas(self, width=500, height=138, bg="white")
+        self.Physicslogo= tk.PhotoImage(file="physicstesterlogo.png")
+        self.TitleLabel.create_image(0,0 ,image=self.Physicslogo, anchor="nw")
+        self.TitleLabel.configure(background="white")
 
-        TitleLabel.grid(row=0, column=2, columnspan=2, sticky="NSWE")
-        TitleLabel.config(font=("Arial", 24))
+        self.TitleLabel.grid(row=0, column=2, columnspan=2, sticky="NSWE")
+
 
         self.errorLabel = tk.Label(self, text="", font=("Arial", 24))
-        self.errorLabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
+        #self.errorLabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
         
+        self.rowconfigure(2,minsize=200)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(6, weight=1)   
 
-        self.rowconfigure(2,minsize=200)
         self.rowconfigure(4,minsize=50)
         self.rowconfigure(6,minsize=50)
+
         
         usernamebox = tk.Entry(self,text="Enter Username")
         usernamebox.grid(row=3,column=2,columnspan=2,sticky="NSEW")
@@ -38,10 +40,12 @@ class LoginFrame(tk.Frame):
 
         unamelabel = tk.Label(self, text="Username")
         unamelabel.grid(row=3, column=1, columnspan=1, sticky="NSWE")
+        unamelabel.configure(background="white")
         unamelabel.config(font=("Arial", 24))
     
         pwordlabel = tk.Label(self, text="Password")
         pwordlabel.grid(row=5, column=1, columnspan=1, sticky="NSWE")
+        pwordlabel.configure(background="white")
         pwordlabel.config(font=("Arial", 24))
         
         loginbutton=tk.Button(self, text="Login")

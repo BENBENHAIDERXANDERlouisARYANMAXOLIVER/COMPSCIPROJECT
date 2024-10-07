@@ -18,6 +18,7 @@ class App(tk.Tk):
 
         self.frames = [ LoginFrame(self)]
         self.columnconfigure(0,weight=1)
+        
         self.rowconfigure(0,weight=1)
         self.switchFrame(0)
 
@@ -62,7 +63,7 @@ class App(tk.Tk):
             c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Bob","Patl","P4ssw0rd"))
             c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("dimon","dith","baejk"))
             c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Hahs","kyee","hashhash"))
-            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Louis","oPris","WOMPWOMP"))
+            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Hahs","kyee","hashhash"))
             
         #userstats database initialisation
             c.execute("CREATE TABLE tbluserstats (userid INTEGER,questionid INTEGER, attemptid INTEGER PRIMARY KEY AUTOINCREMENT, dateanswered TEXT, score INTEGER)")
