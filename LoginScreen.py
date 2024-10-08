@@ -10,17 +10,19 @@ class LoginFrame(tk.Frame):
 
 
         
-        self.TitleLabel = tk.Canvas(self, width=500, height=138, bg="white")
+        self.TitleLabel = tk.Canvas(self, width=500, height=138, bg="white", borderwidth=0, highlightthickness=0)
         self.Physicslogo= tk.PhotoImage(file="physicstesterlogo.png")
         self.TitleLabel.create_image(0,0 ,image=self.Physicslogo, anchor="nw")
         self.TitleLabel.configure(background="white")
+        
 
         self.TitleLabel.grid(row=0, column=2, columnspan=2, sticky="NSWE")
 
 
-        self.errorLabel = tk.Label(self, text="", font=("Arial", 24))
-        #self.errorLabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
-        
+        self.errorlabel = tk.Label(self, text="", font=("Georgia", 54))
+        self.errorlabel.configure(background="white")
+       
+       
         self.rowconfigure(2,minsize=200)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(6, weight=1)   
@@ -29,13 +31,13 @@ class LoginFrame(tk.Frame):
         self.rowconfigure(6,minsize=50)
 
         
-        usernamebox = tk.Entry(self,text="Enter Username")
-        usernamebox.grid(row=3,column=2,columnspan=2,sticky="NSEW")
+        self.usernamebox = tk.Entry(self,text="Enter Username")
+        self.usernamebox.grid(row=3,column=2,columnspan=2,sticky="NSEW")
         
 
         
-        passwordbox = tk.Entry(self,text="Enter Password")
-        passwordbox.grid(row=5,column=2,columnspan=2,sticky="NSEW")
+        self.passwordbox = tk.Entry(self,text="Enter Password")
+        self.passwordbox.grid(row=5,column=2,columnspan=2,sticky="NSEW")
         
 
         unamelabel = tk.Label(self, text="Username")
@@ -64,16 +66,21 @@ class LoginFrame(tk.Frame):
         # print("Bypassed login")
         # self.controller.successfulLogin("asmith")
 
-    def loginSubmitted(self):
+    def loginSubmitted(self,loginbutton):
+                         
         c = self.parent.db.cursor()
-        r = c.execute("SELECT * from tblusername WHERE username = {} and password = {}", [self.usernamebox.get(), self.passwordbox.get()])
+        r = c.execute("SELECT * from tbluserdetails WHERE firstname = ? and password = ?", [self.usernamebox.get(), self.passwordbox.get()])
         results = r.fetchall()
+        self.errorlabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
+        
         if len(results)>0:
         #if True:
-            self.feedbacklabel.config(text="")
+            self.errorlabel.config(text="")
             self.parent.successfulLogin(self.usernamebox.get())
+            print("success)")
             return True
         else:
-            self.feedbacklabel.config(text="Incorrect Login")
-            return False
+           self.errorlabel.config(text="Failure to login")
+           print("Failure")
+           return False
         

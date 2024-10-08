@@ -39,7 +39,7 @@ class App(tk.Tk):
 
             
     def makeDatabase(self, db):
-            #Database craeted and oldcopies are dropped
+            #Database created and oldcopies are dropped
             c = db.cursor()
             c.execute("DROP TABLE IF EXISTS tblquestions")
             c.execute("DROP TABLE IF EXISTS tbluserdetails")
