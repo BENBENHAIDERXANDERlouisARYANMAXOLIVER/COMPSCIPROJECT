@@ -66,7 +66,12 @@ class LoginFrame(tk.Frame):
         print("loaded Login")
         # print("Bypassed login")
         # self.controller.successfulLogin("asmith")
-
+    def NewUserSignup(self):
+        c=self.parent.db.cursor()
+        c.execute("INSERT INTO  tbluserdetails (firstname,secondname,password) VALUES ?,?,?" ,[self.usernamebox.get(),self.usernamebox.get(),self.passwordbox.get()])
+        
+        
+    
     def loginSubmitted(self,loginbutton):
                          
         c = self.parent.db.cursor()
