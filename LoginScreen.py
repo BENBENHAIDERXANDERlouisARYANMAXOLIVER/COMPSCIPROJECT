@@ -21,7 +21,11 @@ class LoginFrame(tk.Frame):
 
         self.errorlabel = tk.Label(self, text="", font=("Georgia", 54))
         self.errorlabel.configure(background="white")
+
+        
        
+
+
        
         self.rowconfigure(2,minsize=200)
         self.columnconfigure(0, weight=1)
@@ -50,12 +54,13 @@ class LoginFrame(tk.Frame):
         pwordlabel.configure(background="white")
         pwordlabel.config(font=("Arial", 24))
         
-        loginbutton=tk.Button(self, text="Login",command=loginSubmitted)
+        loginbutton=tk.Button(self, text="Login",command=self.loginSubmitted)
         loginbutton.grid(row=7,column=2,columnspan=1,sticky="NSWE")
         
         
-        signupbutton=tk.Button(self, text="Signup")
+        signupbutton=tk.Button(self, text="Signup",command = self.NewUserSignup)
         signupbutton.grid(row=7,column=3,columnspan=1,sticky="NSWE")
+        
 
     def keypressed(self,event):
         # they pressed return. have they entered a username yet?
@@ -66,22 +71,34 @@ class LoginFrame(tk.Frame):
         print("loaded Login")
         # print("Bypassed login")
         # self.controller.successfulLogin("asmith")
-    def NewUserSignup(self):
-        c=self.parent.db.cursor()
-        c.execute("INSERT INTO  tbluserdetails (firstname,secondname,password) VALUES ?,?,?" ,[self.usernamebox.get(),self.usernamebox.get(),self.passwordbox.get()])
-        
-        
     
-    def loginSubmitted(self,loginbutton):
+    def NewUserSignup(self):
+       
+        c = self.parent.db.cursor()
+        
+        r = c.execute("SELECT * FROM  tbluserdetails WHERE firstname=?" ,[self.usernamebox.get()])
+        rfound=c.fetchall()
+        if len(rfound) >0:
+            print("Error")
+            return False
+        else:
+
+       # c = self.parent.db.cursor()
+            r = c.execute("INSERT INTO  tbluserdetails (firstname,surname,password) VALUES (?,?,?)" ,[self.usernamebox.get(),self.usernamebox.get(),self.passwordbox.get()])
+            self.parent.db.commit()
+            print("Success")
+            self.errorlabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
+            self.errorlabel.config(text="NEW ACCOUNT CREATED")
+    def loginSubmitted(self):
                          
         c = self.parent.db.cursor()
-        r = c.execute("SELECT * from tbluserdetails WHERE firstname = ? and password = ?", [self.usernamebox.get(), self.passwordbox.get()])
+        r = c.execute("SELECT * FROM tbluserdetails WHERE firstname = ? and password = ?", [self.usernamebox.get(), self.passwordbox.get()])
         results = r.fetchall()
         self.errorlabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
         
         if len(results)>0:
         #if True:
-            self.errorlabel.config(text="")
+            self.errorlabel.config(text="Successful login")
             self.parent.successfulLogin(self.usernamebox.get())
             print("success)")
             return True
