@@ -50,8 +50,9 @@ class LoginFrame(tk.Frame):
         pwordlabel.configure(background="white")
         pwordlabel.config(font=("Arial", 24))
         
-        loginbutton=tk.Button(self, text="Login")
+        loginbutton=tk.Button(self, text="Login",command=loginSubmitted)
         loginbutton.grid(row=7,column=2,columnspan=1,sticky="NSWE")
+        
         
         signupbutton=tk.Button(self, text="Signup")
         signupbutton.grid(row=7,column=3,columnspan=1,sticky="NSWE")
