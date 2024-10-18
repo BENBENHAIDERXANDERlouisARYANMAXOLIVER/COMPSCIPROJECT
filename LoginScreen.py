@@ -10,7 +10,7 @@ class LoginFrame(tk.Frame):
 
 
         
-        self.TitleLabel = tk.Canvas(self, width=500, height=138, bg="white", borderwidth=0, highlightthickness=0)
+        self.TitleLabel = tk.Canvas(self, width=1000, height=276, bg="white", borderwidth=0, highlightthickness=0)
         self.Physicslogo= tk.PhotoImage(file="physicstesterlogo.png")
         self.TitleLabel.create_image(0,0 ,image=self.Physicslogo, anchor="nw")
         self.TitleLabel.configure(background="white")
@@ -35,12 +35,12 @@ class LoginFrame(tk.Frame):
         self.rowconfigure(6,minsize=50)
 
         
-        self.usernamebox = tk.Entry(self,text="Enter Username")
+        self.usernamebox = tk.Entry(self,text="Enter Username",show="")
         self.usernamebox.grid(row=3,column=2,columnspan=2,sticky="NSEW")
         
 
         
-        self.passwordbox = tk.Entry(self,text="Enter Password")
+        self.passwordbox = tk.Entry(self,text="Enter Password",show="*")
         self.passwordbox.grid(row=5,column=2,columnspan=2,sticky="NSEW")
         
 
@@ -55,11 +55,11 @@ class LoginFrame(tk.Frame):
         pwordlabel.config(font=("Arial", 24))
         
         loginbutton=tk.Button(self, text="Login",command=self.loginSubmitted)
-        loginbutton.grid(row=7,column=2,columnspan=1,sticky="NSWE")
+        loginbutton.grid(row=7,column=2,columnspan=2,sticky="NSWE")
         
         
         signupbutton=tk.Button(self, text="Signup",command = self.NewUserSignup)
-        signupbutton.grid(row=7,column=3,columnspan=1,sticky="NSWE")
+        signupbutton.grid(row=8,column=2,columnspan=2,sticky="NSWE")
         
 
     def keypressed(self,event):
