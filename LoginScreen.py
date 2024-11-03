@@ -9,7 +9,7 @@ class LoginFrame(tk.Frame):
         self.parent.bind("<Return>", self.keypressed)
 
 
-        
+        #Canvas- physics tester logo
         self.TitleLabel = tk.Canvas(self, width=1000, height=276, bg="white", borderwidth=0, highlightthickness=0)
         self.Physicslogo= tk.PhotoImage(file="physicstesterlogo.png")
         self.TitleLabel.create_image(0,0 ,image=self.Physicslogo, anchor="nw")
@@ -18,7 +18,7 @@ class LoginFrame(tk.Frame):
 
         self.TitleLabel.grid(row=0, column=2, columnspan=2, sticky="NSWE")
 
-
+        #error label
         self.errorlabel = tk.Label(self, text="", font=("Georgia", 54))
         self.errorlabel.configure(background="white")
 
@@ -26,7 +26,7 @@ class LoginFrame(tk.Frame):
        
 
 
-       
+       # blank filler rows
         self.rowconfigure(2,minsize=200)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(6, weight=1)   
@@ -34,32 +34,34 @@ class LoginFrame(tk.Frame):
         self.rowconfigure(4,minsize=50)
         self.rowconfigure(6,minsize=50)
 
-        
+        #username box
         self.usernamebox = tk.Entry(self,text="Enter Username",show="")
         self.usernamebox.grid(row=3,column=2,columnspan=2,sticky="NSEW")
         
 
-        
+        #passwordbox
         self.passwordbox = tk.Entry(self,text="Enter Password",show="*")
         self.passwordbox.grid(row=5,column=2,columnspan=2,sticky="NSEW")
         
-
+        #usernamebox text
         unamelabel = tk.Label(self, text="Username")
         unamelabel.grid(row=3, column=1, columnspan=1, sticky="NSWE")
         unamelabel.configure(background="white")
         unamelabel.config(font=("Arial", 24))
     
+        #passwordbox text
         pwordlabel = tk.Label(self, text="Password")
         pwordlabel.grid(row=5, column=1, columnspan=1, sticky="NSWE")
         pwordlabel.configure(background="white")
         pwordlabel.config(font=("Arial", 24))
         
+        #login button
         loginbutton=tk.Button(self, text="Login",command=self.loginSubmitted)
-        loginbutton.grid(row=7,column=2,columnspan=2,sticky="NSWE")
+        loginbutton.grid(row=7,column=2,columnspan=1,sticky="NSWE")
         
-        
+        #signup button
         signupbutton=tk.Button(self, text="Signup",command = self.NewUserSignup)
-        signupbutton.grid(row=8,column=2,columnspan=2,sticky="NSWE")
+        signupbutton.grid(row=7,column=3,columnspan=1,sticky="NSWE")
         
 
     def keypressed(self,event):

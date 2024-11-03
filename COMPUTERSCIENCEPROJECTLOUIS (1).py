@@ -1,8 +1,9 @@
 import tkinter as tk
+import sqlite3 as sql
 from tkinter import font as tkFont
 from tkinter import messagebox
-import sqlite3 as sql
 from LoginScreen import LoginFrame
+from MainScreen import MainFrame
 
 class App(tk.Tk):
 
@@ -15,8 +16,8 @@ class App(tk.Tk):
 
         self.makeDatabase(self.db)
         self.testDB()
-
-        self.frames = [ LoginFrame(self)]
+#LoginFrame(self),
+        self.frames = [MainFrame(self)]
         self.columnconfigure(0,weight=1)
         
         self.rowconfigure(0,weight=1)
@@ -48,11 +49,11 @@ class App(tk.Tk):
         
         # Question database initialisation and adding more data
             c.execute("CREATE TABLE tblquestions (questionimg TEXT, maxscore INTEGER,topicname TEXT, answer TEXT, questionid INTEGER PRIMARY KEY AUTOINCREMENT, hints TEXT, modelanswer TEXT)")
-            c.execute("INSERT INTO tblquestions(Questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 5 ,"ASTRO","lightyear", "NOHINT", "TESTVALUE"))
-            c.execute("INSERT INTO tblquestions(Questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 12 ,"Forces","Vector", "NOHINT", "TESTVALUE"))
-            c.execute("INSERT INTO tblquestions(Questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 2 ,"Gravity","12N", "NOHINT", "TESTVALUE"))
-            c.execute("INSERT INTO tblquestions(Questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 1 ,"Electricity","12V", "NOHINT", "TESTVALUE")) 
-            c.execute("INSERT INTO tblquestions(Questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 5 ,"Mechanics","200N", "Units", "TESTVALUE"))
+            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 5 ,"ASTRO","lightyear", "NOHINT", "TESTVALUE"))
+            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 12 ,"Forces","Vector", "NOHINT", "TESTVALUE"))
+            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 2 ,"Gravity","12N", "NOHINT", "TESTVALUE"))
+            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 1 ,"Electricity","12V", "NOHINT", "TESTVALUE")) 
+            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 5 ,"Mechanics","200N", "Units", "TESTVALUE"))
             
             
             
@@ -63,7 +64,7 @@ class App(tk.Tk):
             c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Bob","Patl","P4ssw0rd"))
             c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("dimon","dith","baejk"))
             c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Hahs","kyee","hashhash"))
-            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Hahs","kyee","hashhash"))
+            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("wo","wd","Testing"))
             
         #userstats database initialisation
             c.execute("CREATE TABLE tbluserstats (userid INTEGER,questionid INTEGER, attemptid INTEGER PRIMARY KEY AUTOINCREMENT, dateanswered TEXT, score INTEGER)")
@@ -76,16 +77,17 @@ class App(tk.Tk):
 
 
     def testDB(self):
-                # this just accesses the database and print out what it finds in the pupils table
+                #Database accessed and all lines from data based printed out(spacing added for readability)
                 c = self.db.cursor()
                 results = c.execute("SELECT * FROM tblquestions")
                 print("Question Table")
                 for line in results.fetchall():
-                    print(line)
+                    print(line) 
                 for i in range (3):
                     print("")
                 print("UserDetails Table")
                 c = self.db.cursor()
+
                 results = c.execute("SELECT * FROM tbluserdetails")
                 for line in results.fetchall():
                     print(line)
