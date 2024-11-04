@@ -16,8 +16,8 @@ class App(tk.Tk):
 
         self.makeDatabase(self.db)
         self.testDB()
-#LoginFrame(self),
-        self.frames = [MainFrame(self)]
+#
+        self.frames = [LoginFrame(self),MainFrame(self)]
         self.columnconfigure(0,weight=1)
         
         self.rowconfigure(0,weight=1)
@@ -26,7 +26,7 @@ class App(tk.Tk):
     def successfulLogin(self,username):
         self.loggedInUser = username
         print("Logged in as", username)
-        self.switchFrame(0)
+        self.switchFrame(1)
 
     def switchFrame(self, frameNum):
         # hide all frames except the one chosen

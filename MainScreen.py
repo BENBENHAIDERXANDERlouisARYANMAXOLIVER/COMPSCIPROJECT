@@ -20,23 +20,32 @@ class MainFrame(tk.Frame):
         
      #start test button
         starttest=tk.Button(self, text="Start Test",bg="#5100FF",fg="white", font="Georgia", activebackground="#f1ed0e",relief="groove")
-        starttest.grid(row=7,column=2,columnspan=1,sticky="NSWE") 
+        starttest.grid(row=4,column=2,columnspan=1,sticky="NSWE") 
      #settings test button
         settingsbutton=tk.Button(self, text="Settings",bg="#CCCCCC",fg="black", font="Georgia", activebackground="black",relief="groove", activeforeground="#CCCCCC")
-        settingsbutton.grid(row=8,column=3,columnspan=1,sticky="NSWE") 
+        settingsbutton.grid(row=5,column=2,columnspan=1,sticky="NSWE") 
      
      #tiny cog canvas
      
-        #Canvas- physics tester logo
         self.cogLabel = tk.Canvas(self, width=10, height=10, bg="white", borderwidth=0, highlightthickness=0)
         self.cogimage= tk.PhotoImage(file="COG.png")
         self.cogLabel.create_image(0,0 ,image=self.cogimage, anchor="nw")
         self.cogLabel.configure(background="white")
-        self.cogLabel.grid(row=8, column=2, columnspan=2, sticky="NSWE")
+        self.cogLabel.grid(row=5, column=1, columnspan=1, sticky="E")
+        self.columnconfigure(1,minsize=50)
+     
+     #user stats label b
+        besttopiclabel = tk.Label(self, text="Best Topic : ")
+        besttopiclabel.grid(row=2 ,column=2, columnspan=1, sticky="NSWE")
+        besttopiclabel.configure(background="white")
+        besttopiclabel.config(font=("Arial", 24))
 
 
-
-
+     #user stats label w
+        worsttopiclabel = tk.Label(self, text="Worst Topic : ")
+        worsttopiclabel.grid(row=3, column=2, columnspan=1, sticky="NSWE")
+        worsttopiclabel.configure(background="white")
+        worsttopiclabel.config(font=("Arial", 24))
 
 
 
