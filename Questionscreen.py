@@ -1,52 +1,65 @@
 import tkinter as tk
 import random
+#AnswerCorrect=False
 class QuestionFrame(tk.Frame):
     def __init__(self, parent):
         self.parent = parent
         self.db = parent.db
         tk.Frame.__init__(self, parent)
         self.configure(background="white")
-        self.parent.bind("<Return>")
+        self.parent.bind("")
 
 
-        #Catagory label
+        #random question selected
         c = self.parent.db.cursor()
-        r = c.execute("SELECT topicName FROM tblquestions ORDER BY RANDOM() Limit 1;")
-        print(r)
-        besttopiclabel = tk.Label(self, text="")
-        besttopiclabel.grid(row=2 ,column=2, columnspan=1, sticky="NSWE")
+        r = c.execute("SELECT * FROM tblquestions ORDER BY RANDOM() Limit 1;")
+        self.RandomQ = r.fetchone()
+        
+        
+        
+     #   Topic label
+        topic=self.RandomQ[2]
+      
+       # a = c.execute("SELECT topicname FROM RandomQ" )
+        
+        besttopiclabel = tk.Label(self, text=topic)
+        besttopiclabel.grid(row=5 ,column=0,  sticky="NSWE")
         besttopiclabel.configure(background="white")
         besttopiclabel.config(font=("Arial", 24))
 
         
-     #start test button
-        starttest=tk.Button(self, text="Start Test",bg="#5100FF",fg="white", font="Georgia", activebackground="#f1ed0e",relief="groove",command=self.startkeypressed)
-        starttest.grid(row=4,column=2,columnspan=1,sticky="NSWE") 
-     #settings test button
-        settingsbutton=tk.Button(self, text="Settings",bg="#CCCCCC",fg="black", font="Georgia", activebackground="black",relief="groove", activeforeground="#CCCCCC")
-        settingsbutton.grid(row=5,column=2,columnspan=1,sticky="NSWE") 
-     
-     #tiny cog canvas
-     
-        self.cogLabel = tk.Canvas(self, width=10, height=10, bg="white", borderwidth=0, highlightthickness=0)
-        self.cogimage= tk.PhotoImage(file="COG.png")
-        self.cogLabel.create_image(0,0 ,image=self.cogimage, anchor="nw")
-        self.cogLabel.configure(background="white")
-        self.cogLabel.grid(row=5, column=1, columnspan=1, sticky="E")
-        self.columnconfigure(1,minsize=50)
-     
-     #user stats label b
-        besttopiclabel = tk.Label(self, text="Best Topic : ")
-        besttopiclabel.grid(row=2 ,column=2, columnspan=1, sticky="NSWE")
-        besttopiclabel.configure(background="white")
-        besttopiclabel.config(font=("Arial", 24))
+        questionimg=self.RandomQ[0]
+       #questionimg
+        self.physicsquestion = tk.Canvas(self, width=1000, height=276, bg="white", borderwidth=0, highlightthickness=0)
+        self.physicsquestionimg= tk.PhotoImage(file=questionimg)
+        self.physicsquestion.create_image(0,0 ,image=self.physicsquestionimg, anchor="nw")
+        self.physicsquestion.configure(background="white")
+        self.physicsquestion.grid(row=0, column=1, columnspan=2, sticky="NSWE")
 
 
-     #user stats label w
-        worsttopiclabel = tk.Label(self, text="Worst Topic : ")
-        worsttopiclabel.grid(row=3, column=2, columnspan=1, sticky="NSWE")
-        worsttopiclabel.configure(background="white")
-        worsttopiclabel.config(font=("Arial", 24))
+        #answerbox
+        self.answerbox = tk.Entry(self,text="Enter Answer")
+        self.answerbox.grid(row=6,column=1,sticky="NSEW")
+        
+        #question num text
+      #  questionnumber=i
+        questionnum = tk.Label(self, text="Q num")
+        questionnum.grid(row=0, column=0, sticky="NSWE")
+        questionnum.configure(background="white")
+        questionnum.config(font=("Arial", 24))
+        
+        #hint button
+     #   if (AnswerCorrect==True):
+      #      buttonstatus=tk.NORMAL
+      #  else:
+       #     buttonstatus=tk.DISABLED
+#
+    #    hintbutton=tk.Button(self, text="hint",command=self.hintpressed, default=buttonstatus)
+    #    hintbutton.grid(row=0,column=4,columnspan=1,sticky="NSWE")
+
+       #submit button
+        submitbutton=tk.Button(self, text="submit",command=self.Answerpressed)
+        submitbutton.grid(row=7,column=1,columnspan=1,sticky="NSWE")
 
 
 
@@ -54,9 +67,22 @@ class QuestionFrame(tk.Frame):
 
 
 
+    def hintpressed(self):
+        print(self.RandomQ[5])
+
+    def Answerpressed(self):
+        if(self.answerbox.get()==self.RandomQ[3]):
+            self.AnswerCorrect=True
+            print("correct")
+
+            
+        #check if entered value is accepted
+        #wait a certain amount of time,
+        #then switch frame 
+        #add one to attempt counter
        
-    def startkeypressed(self):
-        self.parent.switchtoquestionscreen()
+  #  def startkeypressed(self):
+   #     self.parent.switchtoquestionscreen()
         # they pressed return. have they entered a username yet?
    #     if len(self.usernamebox.get())>0:
   #          self.loginSubmitted()
@@ -82,22 +108,4 @@ class QuestionFrame(tk.Frame):
             self.parent.db.commit()
             print("Success")
             self.errorlabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
-            self.errorlabel.config(text="NEW ACCOUNT CREATED")
-    def loginSubmitted(self):
-                         
-        c = self.parent.db.cursor()
-        r = c.execute("SELECT * FROM tbluserdetails WHERE firstname = ? and password = ?", [self.usernamebox.get(), self.passwordbox.get()])
-        results = r.fetchall()
-        self.errorlabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
-        
-        if len(results)>0:
-        #if True:
-            self.errorlabel.config(text="Successful login")
-            self.parent.successfulLogin(self.usernamebox.get())
-            print("success)")
-            return True
-        else:
-           self.errorlabel.config(text="Failure to login")
-           print("Failure")
-           return False
-        
+   

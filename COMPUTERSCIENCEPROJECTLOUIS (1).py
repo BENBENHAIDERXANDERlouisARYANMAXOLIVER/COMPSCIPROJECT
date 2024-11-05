@@ -52,11 +52,11 @@ class App(tk.Tk):
         
         # Question database initialisation and adding more data
             c.execute("CREATE TABLE tblquestions (questionimg TEXT, maxscore INTEGER,topicname TEXT, answer TEXT, questionid INTEGER PRIMARY KEY AUTOINCREMENT, hints TEXT, modelanswer TEXT)")
-            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 5 ,"ASTRO","lightyear", "NOHINT", "TESTVALUE"))
-            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 12 ,"Forces","Vector", "NOHINT", "TESTVALUE"))
-            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 2 ,"Gravity","12N", "NOHINT", "TESTVALUE"))
-            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 1 ,"Electricity","12V", "NOHINT", "TESTVALUE")) 
-            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Test", 5 ,"Mechanics","200N", "Units", "TESTVALUE"))
+           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 5 ,"ASTRO","lightyear", "why", "TESTVALUE"))
+          #  c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 12 ,"Forces","Vector", "do", "TESTVALUE"))
+           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 2 ,"Gravity","12N", "it", "TESTVALUE"))
+          #  c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 1 ,"Electricity","12V", "NOHINT", "TESTVALUE")) 
+            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "MechanicsEfficiency1mark Q.png", 1 ,"Mechanics","50%", "use P=FV", "TESTVALUE"))
             
             
             
@@ -66,7 +66,7 @@ class App(tk.Tk):
             c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("John","Smith","12345"))
             c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Bob","Patl","P4ssw0rd"))
             c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("dimon","dith","baejk"))
-            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Hahs","kyee","hashhash"))
+            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("1","kyee","1"))
             c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("wo","wd","Testing"))
             
         #userstats database initialisation
