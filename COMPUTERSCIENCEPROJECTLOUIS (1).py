@@ -17,7 +17,7 @@ class App(tk.Tk):
 
         self.makeDatabase(self.db)
         self.testDB()
-#
+        attempts=0
         self.frames = [LoginFrame(self),MainFrame(self),QuestionFrame(self)]
         self.columnconfigure(0,weight=1)
         
@@ -55,7 +55,7 @@ class App(tk.Tk):
            # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 5 ,"ASTRO","lightyear", "why", "TESTVALUE"))
           #  c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 12 ,"Forces","Vector", "do", "TESTVALUE"))
            # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 2 ,"Gravity","12N", "it", "TESTVALUE"))
-          #  c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 1 ,"Electricity","12V", "NOHINT", "TESTVALUE")) 
+            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "ElectricityResistanceRatio1MarkQ.png", 1 ,"Electricity","8", "set unchanging valeus to one", "TESTVALUE")) 
             c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "MechanicsEfficiency1mark Q.png", 1 ,"Mechanics","50%", "use P=FV", "TESTVALUE"))
             
             

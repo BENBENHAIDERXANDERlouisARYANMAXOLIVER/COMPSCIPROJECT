@@ -1,6 +1,7 @@
 import tkinter as tk
 import random
-#AnswerCorrect=False
+AnswerCorrect=False
+
 class QuestionFrame(tk.Frame):
     def __init__(self, parent):
         self.parent = parent
@@ -8,14 +9,14 @@ class QuestionFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.configure(background="white")
         self.parent.bind("")
-
+        
 
         #random question selected
         c = self.parent.db.cursor()
         r = c.execute("SELECT * FROM tblquestions ORDER BY RANDOM() Limit 1;")
         self.RandomQ = r.fetchone()
         
-        
+        self.attempts=0
         
      #   Topic label
         topic=self.RandomQ[2]
@@ -49,13 +50,14 @@ class QuestionFrame(tk.Frame):
         questionnum.config(font=("Arial", 24))
         
         #hint button
-     #   if (AnswerCorrect==True):
-      #      buttonstatus=tk.NORMAL
-      #  else:
-       #     buttonstatus=tk.DISABLED
-#
-    #    hintbutton=tk.Button(self, text="hint",command=self.hintpressed, default=buttonstatus)
-    #    hintbutton.grid(row=0,column=4,columnspan=1,sticky="NSWE")
+        #if (self.attempts>=1):
+         #   buttonstatus=tk.NORMAL
+            
+     #   else:
+        buttonstatus=tk.DISABLED
+        print(buttonstatus)
+        self.hintbutton=tk.Button(self, text="hint",command=self.hintpressed, state=buttonstatus)
+        self.hintbutton.grid(row=0,column=4,columnspan=1,sticky="NSWE")
 
        #submit button
         submitbutton=tk.Button(self, text="submit",command=self.Answerpressed)
@@ -69,13 +71,26 @@ class QuestionFrame(tk.Frame):
 
     def hintpressed(self):
         print(self.RandomQ[5])
+        if (self.attempts>=1):
+            buttonstatus=tk.NORMAL
+        print(buttonstatus)
+     
+
+
+
+
+
 
     def Answerpressed(self):
         if(self.answerbox.get()==self.RandomQ[3]):
             self.AnswerCorrect=True
             print("correct")
-
-            
+            self.attempts=0
+        elif(self.answerbox.get()!=self.RandomQ[3]):
+            print("nuh huh huh")
+            self.attempts+=1
+            self.hintbutton.config(state=tk.NORMAL)
+         #   print(self.attempts)
         #check if entered value is accepted
         #wait a certain amount of time,
         #then switch frame 
