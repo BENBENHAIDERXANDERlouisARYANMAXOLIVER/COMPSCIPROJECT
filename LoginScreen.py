@@ -90,6 +90,7 @@ class LoginFrame(tk.Frame):
             self.parent.db.commit()
             print("Success")
             self.errorlabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
+         
             self.errorlabel.config(text="NEW ACCOUNT CREATED")
     def loginSubmitted(self):
                          

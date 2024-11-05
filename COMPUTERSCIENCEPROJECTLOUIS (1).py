@@ -4,6 +4,7 @@ from tkinter import font as tkFont
 from tkinter import messagebox
 from LoginScreen import LoginFrame
 from MainScreen import MainFrame
+from Questionscreen import QuestionFrame
 
 class App(tk.Tk):
 
@@ -17,7 +18,7 @@ class App(tk.Tk):
         self.makeDatabase(self.db)
         self.testDB()
 #
-        self.frames = [LoginFrame(self),MainFrame(self)]
+        self.frames = [LoginFrame(self),MainFrame(self),QuestionFrame(self)]
         self.columnconfigure(0,weight=1)
         
         self.rowconfigure(0,weight=1)
@@ -27,7 +28,7 @@ class App(tk.Tk):
         self.loggedInUser = username
         print("Logged in as", username)
         self.switchFrame(1)
-
+   
     def switchFrame(self, frameNum):
         # hide all frames except the one chosen
         for i in range(len(self.frames)):
@@ -37,7 +38,9 @@ class App(tk.Tk):
                 frame.loadUp()
             else:
                 frame.grid_forget()
-
+  
+    def switchtoquestionscreen(self):
+        self.switchFrame(2)
             
     def makeDatabase(self, db):
             #Database created and oldcopies are dropped

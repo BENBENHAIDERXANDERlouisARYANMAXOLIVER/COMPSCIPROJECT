@@ -6,7 +6,7 @@ class MainFrame(tk.Frame):
         self.db = parent.db
         tk.Frame.__init__(self, parent)
         self.configure(background="white")
-        self.parent.bind("<Return>", self.keypressed)
+        self.parent.bind("<Return>")
 
 
         #Canvas- physics tester logo
@@ -19,7 +19,7 @@ class MainFrame(tk.Frame):
         self.TitleLabel.grid(row=0, column=2, columnspan=2, sticky="NSWE")
         
      #start test button
-        starttest=tk.Button(self, text="Start Test",bg="#5100FF",fg="white", font="Georgia", activebackground="#f1ed0e",relief="groove")
+        starttest=tk.Button(self, text="Start Test",bg="#5100FF",fg="white", font="Georgia", activebackground="#f1ed0e",relief="groove",command=self.startkeypressed)
         starttest.grid(row=4,column=2,columnspan=1,sticky="NSWE") 
      #settings test button
         settingsbutton=tk.Button(self, text="Settings",bg="#CCCCCC",fg="black", font="Georgia", activebackground="black",relief="groove", activeforeground="#CCCCCC")
@@ -54,10 +54,11 @@ class MainFrame(tk.Frame):
 
 
        
-    def keypressed(self,event):
+    def startkeypressed(self):
+        self.parent.switchtoquestionscreen()
         # they pressed return. have they entered a username yet?
-        if len(self.usernamebox.get())>0:
-            self.loginSubmitted()
+   #     if len(self.usernamebox.get())>0:
+  #          self.loginSubmitted()
 
     def loadUp(self):
         print("loaded Login")
