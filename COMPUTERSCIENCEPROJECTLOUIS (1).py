@@ -5,7 +5,7 @@ from tkinter import messagebox
 from LoginScreen import LoginFrame
 from MainScreen import MainFrame
 from Questionscreen import QuestionFrame
-
+from ReviewScreen import ReviewFrame
 class App(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -16,9 +16,11 @@ class App(tk.Tk):
         self.db = sql.connect("demoFile.db")
 
         self.makeDatabase(self.db)
+        self.isCorrect = False
+        self.isWrong = False
         self.testDB()
         attempts=0
-        self.frames = [LoginFrame(self),MainFrame(self),QuestionFrame(self)]
+        self.frames = [LoginFrame(self),MainFrame(self),QuestionFrame(self), ReviewFrame(self)]
         self.columnconfigure(0,weight=1)
         
         self.rowconfigure(0,weight=1)
@@ -42,6 +44,19 @@ class App(tk.Tk):
     def switchtoquestionscreen(self):
         self.switchFrame(2)
             
+
+    def switchtoreviewscreen_Right(self):
+        self.switchFrame(3)
+        self.isCorrect=True
+
+    def switchtoreviewscreen_Wrong(self):
+        self.switchFrame(3)
+        self.isWrong=True
+        
+
+
+
+    
     def makeDatabase(self, db):
             #Database created and oldcopies are dropped
             c = db.cursor()
@@ -54,9 +69,9 @@ class App(tk.Tk):
             c.execute("CREATE TABLE tblquestions (questionimg TEXT, maxscore INTEGER,topicname TEXT, answer TEXT, questionid INTEGER PRIMARY KEY AUTOINCREMENT, hints TEXT, modelanswer TEXT)")
            # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 5 ,"ASTRO","lightyear", "why", "TESTVALUE"))
           #  c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 12 ,"Forces","Vector", "do", "TESTVALUE"))
-           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 2 ,"Gravity","12N", "it", "TESTVALUE"))
-            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "ElectricityResistanceRatio1MarkQ.png", 1 ,"Electricity","8", "set unchanging valeus to one", "TESTVALUE")) 
-            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "MechanicsEfficiency1mark Q.png", 1 ,"Mechanics","50%", "use P=FV", "TESTVALUE"))
+         #   c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "GravitykineticEnergy1markQ.png", 1 ,"Gravitational Fields","P has more kinetic energy and less potential energy than Q.", "Think how potential energy changes with distance to an object", "TESTVALUE"))
+            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "ElectricityResistanceRatio1MarkQ.png", 1 ,"Electricity","1,2,3,4,5,6,7,8", "set unchanging values to one", "TESTVALUE")) 
+          #  c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "MechanicsEfficiency1mark Q.png", 1 ,"Mechanics","50%", "use P=FV", "TESTVALUE"))
             
             
             
