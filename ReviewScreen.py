@@ -6,15 +6,29 @@ class ReviewFrame(tk.Frame):
         self.db = parent.db
         tk.Frame.__init__(self, parent)
         self.configure(background="white")
-        self.parent.bind("<Return>", self.keypressed)
+        self.parent.bind("<Return>")
 
 
-      #usernamebox text
+      
+
         
-        if (self.parent.isCorrect==False):
+        
+
+       
+    
+
+      
+
+   
+
+    def loadUp(self):
+        print("loaded Login")
+        #usernamebox text
+        
+        if (self.parent.AnswerCorrect==False):
             self.textcolor="Red"
             self.textcontents="Incorrect"
-        elif(self.parent.isCorrect==True):
+        elif(self.parent.AnswerCorrect==True):
             self.textcolor="Green"
             self.textcontents="Correct"
             
@@ -41,44 +55,6 @@ class ReviewFrame(tk.Frame):
 
         self.rowconfigure(4,minsize=50)
         self.rowconfigure(6,minsize=50)
-
-        #username box
-        self.usernamebox = tk.Entry(self,text="Enter Username",show="")
-        self.usernamebox.grid(row=3,column=2,columnspan=2,sticky="NSEW")
-        
-
-        #passwordbox
-        self.passwordbox = tk.Entry(self,text="Enter Password",show="*")
-        self.passwordbox.grid(row=5,column=2,columnspan=2,sticky="NSEW")
-        
-        #usernamebox text
-        unamelabel = tk.Label(self, text="Username")
-        unamelabel.grid(row=3, column=1, columnspan=1, sticky="NSWE")
-        unamelabel.configure(background="white")
-        unamelabel.config(font=("Arial", 24))
-    
-        #passwordbox text
-        pwordlabel = tk.Label(self, text="Password")
-        pwordlabel.grid(row=5, column=1, columnspan=1, sticky="NSWE")
-        pwordlabel.configure(background="white")
-        pwordlabel.config(font=("Arial", 24))
-        
-        #login button
-        loginbutton=tk.Button(self, text="Login",command=self.loginSubmitted)
-        loginbutton.grid(row=7,column=2,columnspan=1,sticky="NSWE")
-        
-        #signup button
-        signupbutton=tk.Button(self, text="Signup",command = self.NewUserSignup)
-        signupbutton.grid(row=7,column=3,columnspan=1,sticky="NSWE")
-        
-
-    def keypressed(self,event):
-        # they pressed return. have they entered a username yet?
-        if len(self.usernamebox.get())>0:
-            self.loginSubmitted()
-
-    def loadUp(self):
-        print("loaded Login")
         # print("Bypassed login")
         # self.controller.successfulLogin("asmith")
     

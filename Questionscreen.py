@@ -55,11 +55,11 @@ class QuestionFrame(tk.Frame):
          #   buttonstatus=tk.NORMAL
             
      #   else:
-        hintbuttonstatus=tk.DISABLED
-        print(hintbuttonstatus)
-        self.hintbuttonimage= tk.PhotoImage(file="hintbutton.png")
-        self.hintbutton=tk.Button(self, text="hint",command=self.hintpressed, state=hintbuttonstatus,image=self.hintbuttonimage)
-        self.hintbutton.grid(row=0,column=4,columnspan=1,sticky="NSWE")
+      #  hintbuttonstatus=tk.DISABLED
+      #  print(hintbuttonstatus)
+     #   self.hintbuttonimage= tk.PhotoImage(file="hintbutton.png")
+     #   self.hintbutton=tk.Button(self, text="hint",command=self.hintpressed, state=hintbuttonstatus,image=self.hintbuttonimage)
+      #  self.hintbutton.grid(row=0,column=4,columnspan=1,sticky="NSWE")
 
        #submit button
         submitbutton=tk.Button(self, text="submit",command=self.Answerpressed)
@@ -76,10 +76,10 @@ class QuestionFrame(tk.Frame):
 
 
 
-    def hintpressed(self):
-        print(self.RandomQ[5])
-        if (self.attempts>=1):
-            buttonstatus=tk.NORMAL
+   # def hintpressed(self):
+  #      print(self.RandomQ[5])
+  #      if (self.attempts>=1):
+ #           buttonstatus=tk.NORMAL
       #  print(buttonstatus)
      
 
@@ -110,15 +110,15 @@ class QuestionFrame(tk.Frame):
             
             self.textcontents="Wrong"
             self.attempts+=1
-            self.hintbutton.config(state=tk.NORMAL)
+          #  self.hintbutton.config(state=tk.NORMAL)
             self.right_or_wrong.config(fg="Red",text="Incorrect")
             if self.attempts>=3:
                 self.parent.switchtoreviewscreen_Wrong() 
                 
 
-        self.hintbutton.config(state=tk.DISABLED)
+     #   self.hintbutton.config(state=tk.DISABLED)
         time.sleep(0.5)
-        self.hintbutton.config(state=tk.NORMAL)
+      #  self.hintbutton.config(state=tk.NORMAL)
          #   print(self.attempts)
         #check if entered value is accepted
         #wait a certain amount of time,

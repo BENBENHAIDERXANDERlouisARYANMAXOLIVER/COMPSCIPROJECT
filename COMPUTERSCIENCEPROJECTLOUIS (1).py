@@ -16,8 +16,7 @@ class App(tk.Tk):
         self.db = sql.connect("demoFile.db")
 
         self.makeDatabase(self.db)
-        self.isCorrect = False
-        self.isWrong = False
+        self.AnswerCorrect=True
         self.testDB()
         attempts=0
         self.frames = [LoginFrame(self),MainFrame(self),QuestionFrame(self), ReviewFrame(self)]
@@ -47,13 +46,15 @@ class App(tk.Tk):
 
     def switchtoreviewscreen_Right(self):
         self.switchFrame(3)
-        self.isCorrect=True
+        self.AnswerCorrect=True
+        print("this is right")
 
     def switchtoreviewscreen_Wrong(self):
         self.switchFrame(3)
-        self.isWrong=True
+        self.AnswerCorrect=False
+        print("this is wrong")
         
-
+#element.grid_forget()
 
 
     
