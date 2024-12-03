@@ -7,7 +7,7 @@ class ReviewFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.configure(background="white")
         self.parent.bind("<Return>")
-
+        
 
       
 

@@ -79,17 +79,21 @@ class LoginFrame(tk.Frame):
         c = self.parent.db.cursor()
         
         r = c.execute("SELECT * FROM  tbluserdetails WHERE firstname=?" ,[self.usernamebox.get()])
-        rfound=c.fetchall()
+        rfound=r.fetchall()
         if len(rfound) >0:
             print("Error")
             return False
         else:
 
-       # c = self.parent.db.cursor()
+            
             r = c.execute("INSERT INTO  tbluserdetails (firstname,surname,password) VALUES (?,?,?)" ,[self.usernamebox.get(),self.usernamebox.get(),self.passwordbox.get()])
             self.parent.db.commit()
-            print("Success")
+            print("Success1234567890")
+            TEST= c.execute("SELECT * FROM  tbluserdetails")
+            rfound=TEST.fetchall()
+            print(rfound)
             self.errorlabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
+            self.parent.testDB
          
             self.errorlabel.config(text="NEW ACCOUNT CREATED")
     def loginSubmitted(self):

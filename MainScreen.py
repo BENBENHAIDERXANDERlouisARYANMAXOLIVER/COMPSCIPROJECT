@@ -15,15 +15,16 @@ class MainFrame(tk.Frame):
         self.TitleLabel.create_image(0,0 ,image=self.Physicslogo, anchor="nw")
         self.TitleLabel.configure(background="white")
         
-
+            
         self.TitleLabel.grid(row=0, column=2, columnspan=2, sticky="NSWE")
-        
+        self.columnconfigure(0,minsize=400)
+        self.rowconfigure(1,minsize=200)
      #start test button
         starttest=tk.Button(self, text="Start Test",bg="#5100FF",fg="white", font="Georgia", activebackground="#f1ed0e",relief="groove",command=self.startkeypressed)
-        starttest.grid(row=4,column=2,columnspan=1,sticky="NSWE") 
+        starttest.grid(row=4,column=2,columnspan=2,sticky="NSWE") 
      #settings test button
         settingsbutton=tk.Button(self, text="Settings",bg="#CCCCCC",fg="black", font="Georgia", activebackground="black",relief="groove", activeforeground="#CCCCCC")
-        settingsbutton.grid(row=5,column=2,columnspan=1,sticky="NSWE") 
+        settingsbutton.grid(row=5,column=2,columnspan=2,sticky="NSWE") 
      
      #tiny cog canvas
      
@@ -31,7 +32,7 @@ class MainFrame(tk.Frame):
         self.cogimage= tk.PhotoImage(file="COG.png")
         self.cogLabel.create_image(0,0 ,image=self.cogimage, anchor="nw")
         self.cogLabel.configure(background="white")
-        self.cogLabel.grid(row=5, column=1, columnspan=1, sticky="E")
+        self.cogLabel.grid(row=5, column=1, columnspan=1, sticky="NESW")
         self.columnconfigure(1,minsize=50)
      
      #user stats label b
@@ -65,38 +66,6 @@ class MainFrame(tk.Frame):
         # print("Bypassed login")
         # self.controller.successfulLogin("asmith")
     
-    def NewUserSignup(self):
+   
        
-        c = self.parent.db.cursor()
-        
-        r = c.execute("SELECT * FROM  tbluserdetails WHERE firstname=?" ,[self.usernamebox.get()])
-        rfound=c.fetchall()
-        if len(rfound) >0:
-            print("Error")
-            return False
-        else:
-
-       # c = self.parent.db.cursor()
-            r = c.execute("INSERT INTO  tbluserdetails (firstname,surname,password) VALUES (?,?,?)" ,[self.usernamebox.get(),self.usernamebox.get(),self.passwordbox.get()])
-            self.parent.db.commit()
-            print("Success")
-            self.errorlabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
-            self.errorlabel.config(text="NEW ACCOUNT CREATED")
-    def loginSubmitted(self):
-                         
-        c = self.parent.db.cursor()
-        r = c.execute("SELECT * FROM tbluserdetails WHERE firstname = ? and password = ?", [self.usernamebox.get(), self.passwordbox.get()])
-        results = r.fetchall()
-        self.errorlabel.grid(row=1, column=2, columnspan=2, sticky="NSEW")
-        
-        if len(results)>0:
-        #if True:
-            self.errorlabel.config(text="Successful login")
-            self.parent.successfulLogin(self.usernamebox.get())
-            print("success)")
-            return True
-        else:
-           self.errorlabel.config(text="Failure to login")
-           print("Failure")
-           return False
         

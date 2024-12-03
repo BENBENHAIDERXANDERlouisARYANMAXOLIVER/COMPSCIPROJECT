@@ -6,6 +6,7 @@ from LoginScreen import LoginFrame
 from MainScreen import MainFrame
 from Questionscreen import QuestionFrame
 from ReviewScreen import ReviewFrame
+from takedata import dataFrame
 class App(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -14,12 +15,27 @@ class App(tk.Tk):
         self.title("Main Menu")
         self.loggedInUser = ""
         self.db = sql.connect("demoFile.db")
+        self.magnetism=0
+        self.electricity=0
+        self.Nuclear=0
+        self.further_mechanics=0
+        self.gravity=0
+
+    
+
+
+
+
+
+
+
 
         self.makeDatabase(self.db)
         self.AnswerCorrect=True
         self.testDB()
         attempts=0
         self.frames = [LoginFrame(self),MainFrame(self),QuestionFrame(self), ReviewFrame(self)]
+        #LoginFrame(self),MainFrame(self),QuestionFrame(self), ReviewFrame(self)
         self.columnconfigure(0,weight=1)
         
         self.rowconfigure(0,weight=1)
@@ -42,6 +58,9 @@ class App(tk.Tk):
   
     def switchtoquestionscreen(self):
         self.switchFrame(2)
+    
+    def switchtomainscreen(self):
+        self.switchFrame(1)
             
 
     def switchtoreviewscreen_Right(self):
@@ -61,38 +80,40 @@ class App(tk.Tk):
     def makeDatabase(self, db):
             #Database created and oldcopies are dropped
             c = db.cursor()
-            c.execute("DROP TABLE IF EXISTS tblquestions")
-            c.execute("DROP TABLE IF EXISTS tbluserdetails")
-            c.execute("DROP TABLE IF EXISTS tbluserstats")
+           # c.execute("DROP TABLE IF EXISTS tblquestions")
+           # c.execute("DROP TABLE IF EXISTS tbluserdetails")
+           # c.execute("DROP TABLE IF EXISTS tbluserstats")
             
         
         # Question database initialisation and adding more data
-            c.execute("CREATE TABLE tblquestions (questionimg TEXT, maxscore INTEGER,topicname TEXT, answer TEXT, questionid INTEGER PRIMARY KEY AUTOINCREMENT, hints TEXT, modelanswer TEXT)")
-           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 5 ,"ASTRO","lightyear", "why", "TESTVALUE"))
-          #  c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "physicstesterlogo.png", 12 ,"Forces","Vector", "do", "TESTVALUE"))
-         #   c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "GravitykineticEnergy1markQ.png", 1 ,"Gravitational Fields","P has more kinetic energy and less potential energy than Q.", "Think how potential energy changes with distance to an object", "TESTVALUE"))
-            c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "ElectricityResistanceRatio1MarkQ.png", 1 ,"Electricity","1,2,3,4,5,6,7,8", "set unchanging values to one", "TESTVALUE")) 
-          #  c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "MechanicsEfficiency1mark Q.png", 1 ,"Mechanics","50%", "use P=FV", "TESTVALUE"))
+           
+           # c.execute("CREATE TABLE tblquestions (questionimg TEXT, maxscore INTEGER,topicname TEXT, answer TEXT, questionid INTEGER PRIMARY KEY AUTOINCREMENT, hints TEXT, modelanswer TEXT)")
+          #  c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "ParticlesCharge1markQ.png", 1 ,"Particles","Alpha particle, alpha particle", "Consider the relative  charge of the particles and  how they relate to each other and times by voltage", "ParticlesCharge1markQ.png"))
+           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "WavesSonar1markQ.png", 1 ,"Waves","2.25m, 2.25 meters", "Remember that each pulse contains 12 oscillations", "WavesSonar1markQ.png"))
+            #c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "GravitykineticEnergy1markQ.png", 1 ,"Gravity","P has more kinetic energy and less potential energy than Q.", "Think how potential energy changes with distance to an object", "GravitykineticEnergy1markQ.png"))
+            #c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "ElectricityResistanceRatio1MarkQ.png", 1 ,"Electricity","1,2,3,4,5,6,7", "set unchanging values to one", "ElectricityResistanceRatio1MarkQ.png")) 
+            #c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "MechanicsEfficiency1mark Q.png", 1 ,"Mechanics","50%", "use P=FV", "MechanicsEfficiency1mark Q.png"))
+            #c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "WavesFirstHarmonictension1markQ.png", 1 ,"Waves","420hz", "Use The tension and frequency equation, and set any unchanged values to one", "WavesFirstHarmonictension1markQ.png"))
             
             
             
-            db.commit()
+           
         #userDetails database initialisation
-            c.execute("CREATE TABLE tbluserdetails (firstname TEXT,surname TEXT,password TEXT, answer TEXT, userid INTEGER PRIMARY KEY AUTOINCREMENT)")
-            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("John","Smith","12345"))
-            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Bob","Patl","P4ssw0rd"))
-            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("dimon","dith","baejk"))
-            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("1","kyee","1"))
-            c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("wo","wd","Testing"))
-            
+           # c.execute("CREATE TABLE tbluserdetails (firstname TEXT,surname TEXT,password TEXT, answer TEXT, userid INTEGER PRIMARY KEY AUTOINCREMENT)")
+            #c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("John","Smith","12345"))
+           # c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("Bob","Patl","P4ssw0rd"))
+           # c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("dimon","dith","baejk"))
+           # c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("1","kyee","1"))
+           # c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("wo","wd","Testing"))
+            #db.commit()
         #userstats database initialisation
-            c.execute("CREATE TABLE tbluserstats (userid INTEGER,questionid INTEGER, attemptid INTEGER PRIMARY KEY AUTOINCREMENT, dateanswered TEXT, score INTEGER)")
-            c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/8/6", 5))
-            c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/9/6", 5))
-            c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/10/6", 5))
-            c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/11/6", 5))
-            c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/5/12", 5))
-
+           # c.execute("CREATE TABLE tbluserstats (userid INTEGER,questionid INTEGER, attemptid INTEGER PRIMARY KEY AUTOINCREMENT, dateanswered TEXT, score INTEGER)")
+           # c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/8/6", 5))
+           # c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/9/6", 5))
+           # c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/10/6", 5))
+            #c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/11/6", 5))
+            #c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/5/12", 5))
+            db.commit()
 
 
     def testDB(self):
@@ -101,6 +122,7 @@ class App(tk.Tk):
                 results = c.execute("SELECT * FROM tblquestions")
                 print("Question Table")
                 for line in results.fetchall():
+                     
                     print(line) 
                 for i in range (3):
                     print("")
@@ -113,13 +135,7 @@ class App(tk.Tk):
                 for i in range (3):
                     print("")
                 print("UserStats Table")
-                c = self.db.cursor()
-                results = c.execute("SELECT * FROM tbluserstats")
-            
-                for line in results.fetchall():
-                    print(line )
-                for i in range (3):
-                    print("")
+                
                 
                 
             #  c=self.db.cursor()
