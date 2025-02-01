@@ -36,8 +36,17 @@ class StatsFrame(tk.Frame):
         #graph and canvas
         self.theCanvas=tk.Canvas(self,width=800,height=450,bg="lightblue")
         self.theCanvas.grid(row=6,column=6,sticky="NSWE")
-
-
+        #timer and associated label
+        self.timelabel=tk.Label(self,text="Time spent this session:")
+        self.timelabel.grid(row=6 ,column=3, sticky="NSWE")
+        self.timelabel.configure(background="white")
+        self.timelabel.config(font=("Arial", 24))
+        self.parent.update_timer()
+        thetime=self.parent.session_time
+        self.timerlabel=tk.Label(self,text=str(thetime) +" seconds")
+        self.timerlabel.grid(row=6 ,column=4, sticky="NSWE")
+        self.timerlabel.configure(background="white")
+        self.timerlabel.config(font=("Arial", 24))
     #def plotGraph(self):
         c = self.db.cursor()
         r = c.execute("SELECT userid FROM tbluserdetails WHERE firstname = ?  ", [self.parent.loggedInUser])
@@ -48,13 +57,13 @@ class StatsFrame(tk.Frame):
         self.theCanvas.create_line(50,350,750,350,fill="black")
         self.theCanvas.create_line(50,50,50,350,fill="black")
         
-        percent=0
-        ycoord=360
-        for i in range(10):
-            percent =percent -10
+        percent=-10
+        ycoord=380
+        for i in range(11):
+            percent =percent +10
             ycoord  -= 30
             splitpercent=str(percent)
-            self.theCanvas.create_text(30,ycoord,text=str(splitpercent) +"%",anchor="center")
+            self.theCanvas.create_text(30,ycoord,text=str(splitpercent) +"%"+"-",anchor="center")
 
 
 
@@ -98,14 +107,6 @@ class StatsFrame(tk.Frame):
         self.Mechanicsscore=self.parent.overall_topic_scoring(self.Mechanicsscore,"Mechanics")
         
         self.ListofArrays=[self.Particlesscore,self.Wavesscore,self.Gravityscore,self.Magnetismscore,self.Electricityscore,self.Mechanicsscore,self.FurtherMechanicsscore,self.Nuclearscore]
-        print(self.Particlesscore)
-        print(self.Electricityscore)
-        print(self.Wavesscore)
-        print(self.Gravityscore)
-        print(self.Magnetismscore)
-        print(self.FurtherMechanicsscore)
-        print(self.Mechanicsscore)
-        print(self.Nuclearscore)
         scores = {
         "Particlesscore": self.Particlesscore,
         "Electricityscore": self.Electricityscore,
@@ -289,7 +290,8 @@ class StatsFrame(tk.Frame):
         ############## overall % ############
         if noq !=0:
 
-            Question_Percentage=(TotalRight/noq)*100
+            Question_Percentage_non_rounded=(TotalRight/noq)*100
+            Question_Percentage=round(Question_Percentage_non_rounded,1)
         else:
             Question_Percentage==0
 

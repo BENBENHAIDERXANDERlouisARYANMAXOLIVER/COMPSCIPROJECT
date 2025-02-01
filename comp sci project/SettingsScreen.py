@@ -53,7 +53,7 @@ class SettingsFrame(tk.Frame):
 
 
 
-        #Nuclear toggle text
+        #Nuclear toggle t
         self.nuclear_toggle_text = tk.Label(self, text="Nuclear")
         self.nuclear_toggle_text.grid(row=3, column=0, sticky="NSWE")
         self.nuclear_toggle_text.configure(background="white")
@@ -220,7 +220,7 @@ class SettingsFrame(tk.Frame):
         
         
         #statistics page   button
-        self.submitoptions=tk.Button(self, text="Stats",bg="#5100FF",fg="white", font="Georgia", activebackground="#f1ed0e",relief="groove",command=self.parent.switchtostatsFrame)
+        self.submitoptions=tk.Button(self, text="Stats",bg="#FFFF00",fg="black", font="Georgia", activebackground="#f1ed0e",relief="groove",command=self.parent.switchtostatsFrame)
         self.submitoptions.grid(row=7,column=7,columnspan=2,sticky="NSWE") 
         
         

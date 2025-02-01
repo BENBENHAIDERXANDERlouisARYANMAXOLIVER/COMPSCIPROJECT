@@ -7,6 +7,9 @@ class MainFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.configure(background="white")
         self.parent.bind("<Return>")
+        self.bind("s",lambda event: self.parent.switchtosettings())
+        self.bind("<Button-1>", lambda event: self.focus_set())
+        self.bind("<Escape>",lambda event: self.parent.switchtomainscreen())
 
 
         #Canvas- physics tester logo

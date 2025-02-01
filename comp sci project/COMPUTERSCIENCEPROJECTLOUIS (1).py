@@ -12,6 +12,8 @@ from AccountDeleteScreen import DeleteFrame
 from statsscreen import StatsFrame
 from datetime import datetime,timedelta
 from collections import defaultdict
+from Questionscreenfortests import QuestionFrame2
+from time import time
 
 class App(tk.Tk):
 
@@ -24,12 +26,15 @@ class App(tk.Tk):
         self.magnetism=0
         self.electricity=0
         self.Nuclear=0
+       # self.bind("s",self.switchtosettings)
         self.further_mechanics=0
         self.gravity=0
         self.prohibitedtopics=[]
         self.hintstate=1
         self.topicbuttonstate=1
         self.activatestats=False
+        self.start_time = time()
+        self.session_time=0
 
     
 
@@ -44,12 +49,18 @@ class App(tk.Tk):
         self.AnswerCorrect=True
         self.testDB()
         attempts=0
-        self.frames = [LoginFrame(self),MainFrame(self),QuestionFrame(self), ReviewFrame(self),SettingsFrame(self),DeleteFrame(self),StatsFrame(self)]
+        self.frames = [LoginFrame(self),MainFrame(self),QuestionFrame2(self), ReviewFrame(self),SettingsFrame(self),DeleteFrame(self),StatsFrame(self)]
         #LoginFrame(self),MainFrame(self),QuestionFrame(self), ReviewFrame(self),
         self.columnconfigure(0,weight=1)
         
         self.rowconfigure(0,weight=1)
         self.switchFrame(0)
+   
+    def update_timer(self):
+        self.session_time = int(time() - self.start_time)
+        
+
+
 
     def successfulLogin(self,username):
         self.loggedInUser = username
@@ -97,13 +108,7 @@ class App(tk.Tk):
         c = self.db.cursor()
         r = c.execute("SELECT userid FROM tbluserdetails WHERE firstname = ?  ", [self.loggedInUser])
         Founduserid=r.fetchone()
-       # print(Founduserid)
-        #print("#####FIRST TEST< SHOOULD RETURN 1")
-        #Test passed
-    #works fine
-        print("####")
-        print(Topic)
-        print("Electricity")
+      
 
         a = c.execute("SELECT questionid FROM tblquestions WHERE topicname = ? ", [Topic])
         Topic_of_question=a.fetchall()
@@ -196,9 +201,7 @@ class App(tk.Tk):
         
             
                 
-            
 
-       
         
 #element.grid_forget()
 
@@ -209,21 +212,21 @@ class App(tk.Tk):
             c = db.cursor()
             #c.execute("DROP TABLE IF EXISTS tblquestions")
            # c.execute("DROP TABLE IF EXISTS tbluserdetails")
-          #  c.execute("DROP TABLE IF EXISTS tbluserstats")
+           # c.execute("DROP TABLE IF EXISTS tbluserstats")
             
         
         # Question database initialisation and adding more data
            
-            #c.execute("CREATE TABLE tblquestions (questionimg TEXT, maxscore INTEGER,topicname TEXT, answer TEXT, questionid INTEGER PRIMARY KEY AUTOINCREMENT, hints TEXT, modelanswer TEXT)")
+           # c.execute("CREATE TABLE tblquestions (questionimg TEXT, maxscore INTEGER,topicname TEXT, answer TEXT, questionid INTEGER PRIMARY KEY AUTOINCREMENT, hints TEXT, modelanswer TEXT)")
            # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "ParticlesCharge1markQ.png", 1 ,"Particles","Alpha particle, alpha particle", "Consider the relative  charge of the particles and  how they relate to each other and times by voltage", "ParticlesCharge1markQ.png"))
-           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "WavesSonar1markQ.png", 1 ,"Waves","2.25m, 2.25 meters", "Remember that each pulse contains 12 oscillations", "WavesSonar1markQ.png"))
-           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "GravitykineticEnergy1markQ.png", 1 ,"Gravity","P has more kinetic energy and less potential energy than Q.", "Think how potential energy changes with distance to an object", "GravitykineticEnergy1markQ.png"))
-            #c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "ElectricityResistanceRatio1MarkQ.png", 1 ,"Electricity","1,2,3,4,5,6,7,8", "set unchanging values to one", "ElectricityResistanceRatio1MarkQ.png")) 
+           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "WavesSonar1markQ.png", 1 ,"Waves","2.25m, 2.25 meters,C", "Remember that each pulse contains 12 oscillations", "WavesSonar1markQ.png"))
+           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "GravitykineticEnergy1markQ.png", 1 ,"Gravity,B","P has more kinetic energy and less potential energy than Q.,cS", "Think how potential energy changes with distance to an object", "GravitykineticEnergy1markQ.png"))
+           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "ElectricityResistanceRatio1MarkQ.png", 1 ,"Electricity","a", "set unchanging values to one", "ElectricityResistanceRatio1MarkQ.png")) 
            # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "MechanicsEfficiency1mark Q.png", 1 ,"Mechanics","50%", "use P=FV", "MechanicsEfficiency1mark Q.png"))
            # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "WavesFirstHarmonictension1markQ.png", 1 ,"Waves","420hz", "Use The tension and frequency equation, and set any unchanged values to one", "WavesFirstHarmonictension1markQ.png"))
-            #c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "FurtherMechanicsSHMAngularspeed1mark.png", 1 ,"FurtherMechanics","150 rad s−1, 150rads/s , 150 rad/scond, 150 rads^-1", "Convert speed to SL units", "FurtherMechanicsSHMAngularspeed1mark.png")) 
+           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "FurtherMechanicsSHMAngularspeed1mark.png", 1 ,"FurtherMechanics","150 rad s−1, 150rads/s , 150 rad/scond, 150 rads^-1", "Convert speed to SL units", "FurtherMechanicsSHMAngularspeed1mark.png")) 
            # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "NuclearHalflife1markQ.png", 1 ,"Nuclear","3000", "Sub the activity equation into the halflife equation", "NuclearHalflife1markQ.png")) 
-           # c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Magnetismpurpendicularqmark.png", 1 ,"Magnetism","a uniform magnetic field,a,A", "Use Flemmings Left hand rule", "Magnetismpurpendicularqmark.png")) 
+          #  c.execute("INSERT INTO tblquestions(questionimg ,maxscore,topicName, answer, hints, modelanswer) Values (?,?,?,?,?,?)", ( "Magnetismpurpendicularqmark.png", 1 ,"Magnetism","a uniform magnetic field,a,A", "Use Flemmings Left hand rule", "Magnetismpurpendicularqmark.png")) 
             
            
         #userDetails database initialisation
@@ -235,8 +238,8 @@ class App(tk.Tk):
            # c.execute("INSERT INTO tbluserdetails(firstname ,surname, password) Values (?,?,?)", ("wo","wd","Testing"))
             #db.commit()
         #userstats database initialisation
-         #   c.execute("CREATE TABLE tbluserstats (userid INTEGER,questionid INTEGER, attemptid INTEGER PRIMARY KEY AUTOINCREMENT, dateanswered TEXT, score INTEGER)")
-          #  c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/8/6", 5))
+          #  c.execute("CREATE TABLE tbluserstats (userid INTEGER,questionid INTEGER, attemptid INTEGER PRIMARY KEY AUTOINCREMENT, dateanswered TEXT, score INTEGER)")
+           # c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/8/6", 5))
            # c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/9/6", 5))
            # c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/10/6", 5))
             #c.execute("INSERT INTO tbluserstats( userid, questionid,  dateanswered ,score) Values (?,?,?,?)", (None, None,"2024/11/6", 5))
@@ -248,6 +251,11 @@ class App(tk.Tk):
                 #Database accessed and all lines from data based printed out(spacing added for readability)
                 c = self.db.cursor()
                 results = c.execute("SELECT * FROM tblquestions")
+                thecurrentdate=datetime.now()
+                oneweekagoplusone=thecurrentdate-timedelta(days=8)
+               # for i in range (10):
+                #    r = c.execute("INSERT INTO  tbluserstats (userid,questionid,dateanswered,score) VALUES (?,?,?,?)" ,[1, 2,oneweekagoplusone,1])
+                 #   r = c.execute("INSERT INTO  tbluserstats (userid,questionid,dateanswered,score) VALUES (?,?,?,?)" ,[1, 6,oneweekagoplusone,1])
                 print("Question Table")
                 for line in results.fetchall():
                      
@@ -260,12 +268,14 @@ class App(tk.Tk):
                 results = c.execute("SELECT * FROM tbluserdetails")
                 for line in results.fetchall():
                     print(line)
+                    
                 for i in range (3):
                     print("")
                 print("UserStats Table")
                 results = c.execute("SELECT * FROM tbluserstats")
                 for line in results.fetchall():
                     print(line)
+                   # print(line )
                 
                 
                 

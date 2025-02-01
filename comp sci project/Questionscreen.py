@@ -23,6 +23,7 @@ class QuestionFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.configure(background="white")
         self.parent.bind("")
+        self.parent.bind("<s>", self.parent.switchtosettings)
         self.questionsSelected=[]
         self.keep_finding_new_questions=True
         self.columnconfigure(0,minsize=400)
@@ -30,7 +31,7 @@ class QuestionFrame(tk.Frame):
         self.rowconfigure(2,minsize=90)
         self.marks=0
         self.QuestionArray=[]
-        self.final_question_array_with_weighting=[('ElectricityResistanceRatio1MarkQ.png', 1, 'Electricity', '1,2,3,4,5,6,7', 1, 'set unchanging values to one', 'ElectricityResistanceRatio1MarkQ.png'),('ElectricityResistanceRatio1MarkQ.png', 1, 'Electricity', '1,2,3,4,5,6,7', 1, 'set unchanging values to one', 'ElectricityResistanceRatio1MarkQ.png')]
+        self.final_question_array_with_weighting=[('ElectricityResistanceRatio1MarkQ.png', 1, 'Electricity', '1,2,3,4,5,6,7', 1, 'set unchanging values to one', 'ElectricityResistanceRatio1MarkQ.png'),('GravitykineticEnergy1markQ.png', 1, 'Gravity', 'P has more kinetic energy and less potential energy than Q.', 1, 'Think how potential energy changes with distance to an object', 'GravitykineticEnergy1markQ.png') ,('FurtherMechanicsSHMAngularspeed1mark.png', 1, 'Further Mechanics', '150 rad s−1, 150rads/s , 150 rad/scond, 150 rads^-1', 3, 'Convert speed to SL units', 'FurtherMechanicsSHMAngularspeed1mark.png') ]
         self.ListOfQuestionIDs=[1,2,3,4,5,6]
         self.FMechanicsArray=[]
         self.Gravity_Array=[]
@@ -44,9 +45,9 @@ class QuestionFrame(tk.Frame):
         self.Nuclear_Weight=5
         self.Electricity_Weight=5
         self.Magnetism_Weight=5
-
+        self.firstQ=0
         #start test button
-               
+        self.is_prohib_topic=0       
         self.sTestbutton=tk.Button(self, text="submit",command=self.Begin_Test)
         self.sTestbutton.grid(row=9,column=2,columnspan=4,rowspan=3,sticky="NSWE")
        
@@ -81,7 +82,7 @@ class QuestionFrame(tk.Frame):
 
         tempvar=0
         random_minus=(len(self.final_question_array_with_weighting))
-       # print(random_minus)
+       
         the_Random_Q=random.randint(1,random_minus-1)
         self.RandomQ=self.final_question_array_with_weighting[the_Random_Q]
         
@@ -91,19 +92,20 @@ class QuestionFrame(tk.Frame):
         print("############################################################")
         print(self.parent.prohibitedtopics)
         print("############################################################")
+        
         for item in self.parent.prohibitedtopics:
             if item==self.RandomQ[2]:
-                tempvar=1
-        while(tempvar==1):
-            tempvar=0
+                self.is_prohib_topic=1
+        while(self.is_prohib_topic==1):
+            self.is_prohib_topic=0
             random_minus=(len(self.final_question_array_with_weighting))
             # print(random_minus)
             the_Random_Q=random.randint(1,random_minus-1)
             self.RandomQ=self.final_question_array_with_weighting[the_Random_Q]
-            for item in self.parent.prohibitedtopics:
-                if item==self.RandomQ[2]:
-                    tempvar=1
-        self.questionsSelected.append(self.RandomQ[4])
+            for topic in self.parent.prohibitedtopics:
+                if topic==self.RandomQ[2]:
+                    self.is_prohib_topic=1
+        self.questionsSelected.append(self.RandomQ[0][4])
 
 
         
@@ -170,21 +172,21 @@ class QuestionFrame(tk.Frame):
 
         
      #   Topic label
-        topic=self.RandomQ[2]
+        topic=self.RandomQ[0][2]
       
        # a = c.execute("SELECT topicname FROM RandomQ" )
         if(self.parent.topicbuttonstate==0):
             topic= "TOPICS DISABLED"
         else:
 
-            topic=self.RandomQ[2]
+            topic=self.RandomQ[0][2]
         self.besttopiclabel = tk.Label(self, text=topic)
         self.besttopiclabel.grid(row=7 ,column=1,  sticky="NSWE")
         self.besttopiclabel.configure(background="white")
         self.besttopiclabel.config(font=("Arial", 24))
 
         
-        questionimg=self.RandomQ[0]
+        questionimg=self.RandomQ[0][0]
        #questionimg
         self.physicsquestion = tk.Canvas(self, width=1000, height=276, bg="white", borderwidth=0, highlightthickness=0)
         self.physicsquestionimg= tk.PhotoImage(file=questionimg)
@@ -275,8 +277,13 @@ class QuestionFrame(tk.Frame):
             Arraylength=1
         for item in arrayname:
             total=total+item[4]
-        weightingvariable=((total/Arraylength)*100)
+        if total >0:
+            weightingvariable=((Arraylength/total)*10)
+        else:
+            weightingvariable=50
         Topic_Weight_Var=round(weightingvariable)
+        print("THE QUESTION WEIGHTING is"+str(Topic_Weight_Var))
+        
         return Topic_Weight_Var
         print("THIS IS THE ACTUAL PERCENTAGES SUBPROGRAM")
 #len of arrayname workig here
@@ -307,10 +314,11 @@ class QuestionFrame(tk.Frame):
                 Adjustedarraylen=arraynamelength-1
 
                 QtoADD=random.randint(0,Adjustedarraylen)
-                #print(QtoADD)
-                print("ABOVE is QUESTION TO ADD")
+                print(QtoADD)
+              #  print("ABOVE is QUESTION TO ADD")
+               # print(TheArrayName[QtoADD])
                 self.temparray.append(TheArrayName[QtoADD])
-                print(self.final_question_array_with_weighting)
+                #print(self.final_question_array_with_weighting)
         
 
 
@@ -363,15 +371,56 @@ class QuestionFrame(tk.Frame):
 
 
     def loadUp(self):
-        print("")
+             #  self.Questionpercentworkout("Further mechanics",self.FMechanicsArray)
+        self.Questionpercentworkout("Magnetism",self.Magnetism_Array)
+        self.Questionpercentworkout("Gravity",self.Gravity_Array)
+        self.Questionpercentworkout("Electricity",self.Electricity_Array)
+        self.Questionpercentworkout("Nuclear",self.Nuclear_Array)
+       
+        #self.Actualpercentages(self.FMechanics_Weight,self.FMechanicsArray)
+        self.Gravity_Weight=self.Actualpercentages(self.Gravity_Weight,self.Gravity_Array)
+        self.Nuclear_Weight=self.Actualpercentages(self.Nuclear_Weight ,self.Nuclear_Array)
+        self.Electricity_Weight=self.Actualpercentages(self.Electricity_Weight,self.Electricity_Array)
+        self.Magnetism_Weight=self.Actualpercentages(self.Magnetism_Weight,self.Magnetism_Array)
 
+
+    
+
+        print(self.FMechanics_Weight)
+        print(self.Gravity_Weight)
+        print(self.Nuclear_Weight)
+        print(self.Electricity_Weight)
+        print(self.Magnetism_Weight)
+       # self.GenerateQuestion(self.FMechanics_Weight,self.FMechanicsArray,"Further Mechanics")
+        self.GenerateQuestion(self.Gravity_Weight,self.Gravity_Array,"Gravity")
+        self.GenerateQuestion(self.Nuclear_Weight ,self.Nuclear_Array,"Nuclear")   
+        self.GenerateQuestion(self.Electricity_Weight,self.Electricity_Array,"Electricity")
+        self.GenerateQuestion(self.Magnetism_Weight,self.Magnetism_Array,"Magnetism")
+
+        print("THE QUESTION WEIGHTING FOR Gravity IS " +str(self.Gravity_Weight))
+        print("THE QUESTION WEIGHTING FOR Nuclear IS " +str(self.Nuclear_Weight))
+        print("THE QUESTION WEIGHTING FOR Electricity IS " +str(self.Electricity_Weight))
+        print("THE QUESTION WEIGHTING FOR magnetism IS " +str(self.Magnetism_Weight))
+        print("##################################################### WEIGHTS")
+       
+        for item in self.temparray:
+            c = self.parent.db.cursor()
+            r = c.execute("SELECT * FROM tblquestions WHERE questionid=?",[item[1]])
+            Appendto=r.fetchall()
+            #append to
+            self.final_question_array_with_weighting.append(Appendto)
+      #  print(self.final_question_array_with_weighting)
+        print("############# THIS IS THE FINAL QUESTION ARRAY WITH WEIGHTING")
+        for item in self.final_question_array_with_weighting:
+            print(item[0][2])
+            
 
     def Answerpressed(self):
         isAnswerinRange=False
         correctAnswers = self.RandomQ[3].split(",")
       #  print(correctAnswers)
         for item in correctAnswers:
-            if(self.answerbox.get()==item):
+            if(self.answerbox.get().upper ==item.upper):
                 isAnswerinRange=True
               
 
@@ -446,7 +495,7 @@ class QuestionFrame(tk.Frame):
         if(self.parent.topicbuttonstate==0):
               topic= "TOPICS DISABLED"
         else:
-
+            print("#########0"+self.RandomQ)
             topic=self.RandomQ[2]
        
       
@@ -518,7 +567,7 @@ class QuestionFrame(tk.Frame):
 
     def Answerpressed(self):
         isAnswerinRange=False
-        correctAnswers = self.RandomQ[3].split(",")
+        correctAnswers = self.RandomQ[0][3].split(",")
         
         for item in correctAnswers:
             if(self.answerbox.get()==item):
@@ -563,7 +612,7 @@ class QuestionFrame(tk.Frame):
             self.answerbox.delete(0,tk.END)
          
         self.userID=  self.parent.loggedInUser
-        self.questionID=(int(self.RandomQ[4]) +1)
+        self.questionID=(int(self.RandomQ[0][4]) +1)
         self.current_time=datetime.now()
 
       #  if(self.attempts<2):
@@ -599,6 +648,7 @@ class QuestionFrame(tk.Frame):
    
     def QuestionReview(self, AnswerCorrect):
         #remving question parts of screen
+        self.firstQ=self.firstQ+1
         self.hintbutton.grid_forget()
         self.submitbutton.grid_forget()
         self.physicsquestion.grid_forget()
@@ -609,46 +659,21 @@ class QuestionFrame(tk.Frame):
         self.right_or_wrong.grid_forget()
 
 
-      #  self.Questionpercentworkout("Further mechanics",self.FMechanicsArray)
-        self.Questionpercentworkout("Magnetism",self.Magnetism_Array)
-        self.Questionpercentworkout("Gravity",self.Gravity_Array)
-        self.Questionpercentworkout("Electricity",self.Electricity_Array)
-        self.Questionpercentworkout("Nuclear",self.Nuclear_Array)
-       
-        #self.Actualpercentages(self.FMechanics_Weight,self.FMechanicsArray)
-        self.Actualpercentages(self.Gravity_Weight,self.Gravity_Array)
-        self.Actualpercentages(self.Nuclear_Weight ,self.Nuclear_Array)
-        self.Actualpercentages(self.Electricity_Weight,self.Electricity_Array)
-        self.Actualpercentages(self.Magnetism_Weight,self.Magnetism_Array)
+ 
 
-        print(self.Gravity_Array)
-        print("##########################################################################################")
-        print(len(self.Gravity_Array))
-        self.lengthofarray("bob")
-
-       
-
-        print(self.Gravity_Array)
-        print("###################### GRAV ARRAY TEST SHOULD BE FULL")
-
-       
-       # self.GenerateQuestion(self.FMechanics_Weight,self.FMechanicsArray,"Further Mechanics")
-        self.GenerateQuestion(self.Gravity_Weight,self.Gravity_Array,"Gravity")
-        self.GenerateQuestion(self.Nuclear_Weight ,self.Nuclear_Array,"Nuclear")   
-        self.GenerateQuestion(self.Electricity_Weight,self.Electricity_Array,"Electricity")
-        self.GenerateQuestion(self.Magnetism_Weight,self.Magnetism_Array,"Magnetism")
-
-      #  print(self.temparray)
-        for item in self.temparray:
-            c = self.parent.db.cursor()
-            r = c.execute("SELECT * FROM tblquestions WHERE questionid=?",[item[1]])
-            Appendto=r.fetchall()
-            self.final_question_array_with_weighting.append(Appendto)
-            
+        
        # for i in range(10):
           #  print(" ")
            # print(self.final_question_array_with_weighting)
-        self.questionID=(int(self.RandomQ[4]) +1)
+        print(self.RandomQ)
+        print("############### RANDOM Q")
+        if(self.firstQ<2):
+            print("h")
+
+
+           # self.questionID=(int(self.RandomQ[4]) +1)
+        else:
+            self.questionID=(int(self.RandomQ[0][4]) +1)
         self.current_time=datetime.now()
         c = self.parent.db.cursor()
         print("###############")
@@ -675,15 +700,23 @@ class QuestionFrame(tk.Frame):
         self.right_or_wrong_review.config(font=("Georgia", 24))
 
         #modelAnswer
-        model_answerimg=self.RandomQ[6]
+        if(self.firstQ<2):
+
+            model_answerimg=self.RandomQ[0][6]
+        else:
+            model_answerimg=self.RandomQ[0][6]
+
        
         self.model_answer = tk.Canvas(self, width=1000, height=256, bg="white", borderwidth=0, highlightthickness=0)
         self.model_answerimg= tk.PhotoImage(file=model_answerimg)
         self.model_answer.create_image(0,0 ,image=self.model_answerimg, anchor="nw")
         self.model_answer.configure(background="white")
         self.model_answer.grid(row=2, column=2, columnspan=2, sticky="NSWE")
-       
-        CorrectAnswer=self.RandomQ[3]
+        if(self.firstQ<2):
+            CorrectAnswer=self.RandomQ[0][3]
+        else:
+            CorrectAnswer=self.RandomQ[0][3]
+
         #Answer Label
         self.correct_answer_label = tk.Label(self, text="The List of Correct Answers are :"+ CorrectAnswer)
         self.correct_answer_label.grid(row=5, column=2, sticky="NSWE")
@@ -795,7 +828,7 @@ class QuestionFrame(tk.Frame):
             if(self.parent.topicbuttonstate==0):
                 topic= ("TOPICS DISABLED")
             else:
-
+                print(self.RandomQ)
                 topic=self.RandomQ[2]
             self.besttopiclabel = tk.Label(self, text=topic)
             self.besttopiclabel.grid(row=5 ,column=1,  sticky="NSWE")
@@ -803,8 +836,9 @@ class QuestionFrame(tk.Frame):
             self.besttopiclabel.config(font=("Arial", 24))
 
         
-            questionimg=self.RandomQ[0]
+            questionimg=self.RandomQ[0][0]
             print(self.RandomQ)
+            print("############")
        #questionimg
             self.physicsquestion = tk.Canvas(self, width=1000, height=276, bg="white", borderwidth=0, highlightthickness=0)
             self.physicsquestionimg= tk.PhotoImage(file=questionimg)
@@ -853,7 +887,10 @@ class QuestionFrame(tk.Frame):
         self.correct_answer_label.grid_forget()
         self.tryagain.grid_forget()
         self.nextQ.grid_forget()
-
+        
+        print("##########final question array with waeighting")
+        print(self.final_question_array_with_weighting)
+        print("##########final question array with waeighting")
 
      #Test completed label
         self.Testcompleted = tk.Label(self, text="TestCompleted")
